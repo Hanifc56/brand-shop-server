@@ -48,6 +48,31 @@ async function run() {
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
+    // update Product
+    app.put("/products/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedProduct = req.body;
+      const Product = {
+        $set: {
+          name: updatedProduct.name,
+          brand: updatedProduct.brand,
+          photo: updatedProduct.photo,
+          type: updatedProduct.type,
+          price: updatedProduct.price,
+          rateing: updatedProduct.rateing,
+          discription: updatedProduct.discription,
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        Product,
+        options
+      );
+      res.send(result);
+    });
+
     // cart related api
     app.get("/mycart", async (req, res) => {
       const cursor = cartCollection.find();
