@@ -54,6 +54,7 @@ async function run() {
       const result = await cartCollection.insertOne(addedToCart);
       res.send(result);
     });
+    // delete a card
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
